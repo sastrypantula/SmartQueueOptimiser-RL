@@ -53,8 +53,13 @@ class QueueOptimizationEnv(gym.Env):
         self.customers_served = 0
         self.total_wait_time = 0
         
-    def reset(self) -> Tuple[np.ndarray, Dict[str, Any]]:
+    def reset(self, *, seed=None, options=None) -> Tuple[np.ndarray, Dict[str, Any]]:
         """Reset environment to initial state."""
+        super().reset(seed=seed)
+        
+        if seed is not None:
+            np.random.seed(seed)
+        
         self.queue = []
         self.counters = [
             {"busy": False, "service_time_left": 0} 
